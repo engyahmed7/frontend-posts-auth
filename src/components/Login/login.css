@@ -1,0 +1,42 @@
+.login-title {
+  margin-bottom: 1rem;
+}
+
+.login-main-container{
+    display: block!important;
+    margin: 0 auto!important;
+}
+
+form .btn {
+  background-color: #4a148c;
+  color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0px;
+}
+
+form .btn:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #4a148c;
+  border-radius: 0px;
+}
+/* row */
+.card-login {
+    margin-top: 50px!important;
+
+  background-color: #f2eef3;
+  box-shadow: 0px 1px 2px 0px #bfbdbd;
+ 
+}
+
+input[type="email"], input[type="password"] {
+  border-radius: 0px;
+}
+
+input::placeholder {
+  font-size: 0.9rem;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+  box-shadow: 0 0 0 0.2rem rgba(74, 20, 140, 0.25);
+}
