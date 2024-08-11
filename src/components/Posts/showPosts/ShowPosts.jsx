@@ -19,11 +19,13 @@ export default function ShowPosts() {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
-        console.log(response.data.data);
+        console.log(response.data);
 
-        if (Array.isArray(response.data.data)) {
-          setPosts(response.data.data);
-          setFilteredPosts(response.data.data);
+        if (response.data && response.data.status === 'success') {
+          // Convert object of posts to array
+          const postsArray = Object.values(response.data.data);
+          setPosts(postsArray);
+          setFilteredPosts(postsArray);
         } else {
           setError('Invalid data format.');
         }
@@ -79,10 +81,10 @@ export default function ShowPosts() {
                   <h5 className="card-title">{post.title}</h5>
                   <p className="card-text">{post.content.substring(0, 100)}...</p>
                   <p className="card-text text-muted">
-                    Categories: {Array.isArray(post.categories.name) ? post.categories.name.join(', ') : ''}
+                    Categories: {Array.isArray(post.categories.name) ? post.categories.name.join(', ') : 'No categories'}
                   </p>
                   <p className="card-text text-muted">
-                    By {post.user} | {new Date(post.created_at).toLocaleDateString()}
+                    By {post.user} | {post.created_at ? new Date(post.created_at).toLocaleDateString() : 'Date not available'}
                   </p>
                   <a href={`/posts/${post.id}`} className="btn btn-primary">Read More</a>
                 </div>

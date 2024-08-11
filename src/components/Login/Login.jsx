@@ -9,13 +9,13 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState('');
-  const [successMessage, setSuccessMessage] = useState(''); // New state for success message
+  const [successMessage, setSuccessMessage] = useState(''); 
 
   async function handleSubmit(e) {
     e.preventDefault();
     setErrors({});
     setApiError('');
-    setSuccessMessage(''); // Clear any previous success message
+    setSuccessMessage(''); 
 
     const newErrors = {};
     if (!email) {
@@ -31,29 +31,23 @@ export default function Login() {
       console.log("Submitting login request...");
       const response = await axios.post('http://localhost/api/login', { email, password });
 
-      // Extract the token from response
       const accessToken = response.data.data.idToken;
 
       console.log("Login successful, token:", accessToken);
       localStorage.setItem('token', accessToken);
 
-      // Set success message
       setSuccessMessage('Login successful!'); 
 
-      // Optionally, clear the form
       setEmail('');
       setPassword('');
       
     } catch (error) {
       console.log("Error:", error);
       if (error.response) {
-        // Server responded with a status other than 2xx
         setApiError(error.response.data.message || 'An error occurred. Please try again.');
       } else if (error.request) {
-        // Request was made but no response received
         setApiError('No response from server. Please check your connection.');
       } else {
-        // Something else caused the error
         setApiError('An unexpected error occurred.');
       }
     }
@@ -68,7 +62,7 @@ export default function Login() {
             <img src={logo} className='text-center m-auto d-block logo-img' alt="logo Image" />
             <h3 className='text-center display-5 login-title mt-3'>Welcome Back !!</h3>
             {apiError && <div className='alert alert-danger'>{apiError}</div>}
-            {successMessage && <div className='alert alert-success'>{successMessage}</div>} {/* Display success message */}
+            {successMessage && <div className='alert alert-success'>{successMessage}</div>} 
             <div className='form-group'>
               <label htmlFor='email' className='mb-2 mt-2'>Email</label>
               <input 
