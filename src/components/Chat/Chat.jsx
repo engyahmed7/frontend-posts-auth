@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { database } from "../../firebase-config"; 
+import { database } from "../../firebase-config";
 import { ref, onValue, push } from "firebase/database";
-import "./chat.css"; 
+import "./chat.css";
 
 const Chat = ({ user }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const messagesRef = ref(database, "chat");
-
   useEffect(() => {
-
+    const messagesRef = ref(database, "chat");
     onValue(messagesRef, (snapshot) => {
       const data = snapshot.val();
-      const chatMessages = [];
+       const chatMessages = [];
 
       for (let id in data) {
         chatMessages.push(data[id]);
@@ -29,10 +27,10 @@ const Chat = ({ user }) => {
       return;
     }
 
-    // const messagesRef = ref(database, "chat");
+    const messagesRef = ref(database, "chat");
 
     push(messagesRef, {
-      user_id: user.uid, 
+      user_id: user.uid,
       email: user.email,
       message: message,
       timestamp: Date.now(),
@@ -47,12 +45,16 @@ const Chat = ({ user }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`message ${msg.user_id === user.uid ? 'sent' : 'received'}`}
+            className={`message ${
+              msg.user_id === user.uid ? "sent" : "received"
+            }`}
           >
             <div className="message-header">{msg.email || "Unknown"}</div>
             <div className="message-body">
               {msg.message}
-              <div className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</div>
+              <div className="timestamp">
+                {new Date(msg.timestamp).toLocaleTimeString()}
+              </div>
             </div>
           </div>
         ))}

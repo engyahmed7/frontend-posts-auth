@@ -5,6 +5,7 @@ import ShowPost from "./components/Posts/showPosts/ShowPosts";
 import Navbar from "./components/Navbar/Navbar";
 import Chat from "./components/Chat/Chat";
 import {jwtDecode} from "jwt-decode"; 
+import PhoneLogin from "./components/PhoneLogin/PhoneLogin";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -34,6 +35,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/posts" element={<ShowPost />} />
             <Route path="/chat" element={<Chat user={user} />} /> 
+            <Route path="/phone" element={<PhoneLogin/>} />
           </Routes>
         </Router>
       )}
