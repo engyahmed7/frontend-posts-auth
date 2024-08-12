@@ -3,6 +3,9 @@ import loginImg from "../../assets/images/login3-remove.png";
 import logo from "../../assets/images/key.png";
 import "./login.css";
 import axios from "axios";
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from "../../firebase-config";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,6 +13,34 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  
+
+  const handleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const token = result.user.accessToken;
+        console.log('Success:', token);
+        
+        fetch('http://localhost/api/auth/google', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ token: token }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -114,6 +145,7 @@ export default function Login() {
             <button type="submit" className="btn mt-4 w-100">
               Login
             </button>
+            <button onClick={handleLogin}>Sign in with Google</button>
           </form>
         </div>
         {/* Image column container */}
